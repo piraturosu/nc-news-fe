@@ -1,12 +1,29 @@
-import React from "react";
+import { useState } from "react";
 import {
   ArrowUpIcon,
   ArrowDownIcon,
   ChatBubbleOvalLeftIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { patchArticleVote } from "../api";
 
 function ArticleCard({ title, body, topic, comment_count, votes, article_id }) {
+  const [localVotes, setLocalVotes] = useState(votes);
+
+  function handleIncrementVote() {
+    setLocalVotes((prevVotes) => prevVotes + 1);
+    patchArticleVote(article_id, { inc_votes: 1 }).catch(() => {
+      setLocalVotes((prevVotes) => prevVotes - 1);
+    });
+  }
+
+  function handleDecrementVote() {
+    setLocalVotes((prevVotes) => prevVotes - 1);
+    patchArticleVote(article_id, { inc_votes: -1 }).catch(() => {
+      setLocalVotes((prevVotes) => prevVotes + 1);
+    });
+  }
+
   return (
     <div className="h-50 mt-4 mb-4 hover:bg-slate-100 hover:shadow-md flex flex-col justify-evenly">
       <div className="flex">
@@ -20,9 +37,15 @@ function ArticleCard({ title, body, topic, comment_count, votes, article_id }) {
       </p>
       <div className="flex mt-2">
         <div className="bg-slate-200 rounded-full w-15 h-8 flex items-center justify-around ml-4">
-          <ArrowUpIcon className="size-4" />
-          <p>{votes}</p>
-          <ArrowDownIcon className="size-4" />
+          <ArrowUpIcon
+            className="size-4 cursor-pointer hover:text-blue-500"
+            onClick={handleIncrementVote}
+          />
+          <p>{localVotes}</p>
+          <ArrowDownIcon
+            className="size-4 cursor-pointer hover:text-blue-500"
+            onClick={handleDecrementVote}
+          />
         </div>
         <div className="bg-slate-200 rounded-full w-15 h-8 flex items-center justify-around ml-4">
           <ChatBubbleOvalLeftIcon className="size-4" />

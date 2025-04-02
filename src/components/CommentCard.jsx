@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { ArrowUpIcon, ArrowDownIcon } from "@heroicons/react/24/outline";
-function CommentCard({ id, body, votes, author }) {
+function CommentCard({ body, votes, author }) {
   return (
-    <div className="mt-4" key={id}>
+    <div className="mt-4">
       <h3>{author}</h3>
       <p>{body}</p>
       <div className="flex mt-2">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ArticleCard from "./ArticleCard";
-import { getArticles } from "../Api";
+import { getArticles } from "../api";
 
 function ArticlesList() {
   const [articles, setArticles] = useState([]);
@@ -22,12 +22,12 @@ function ArticlesList() {
     <div className="w-4xl">
       {articles.map((article) => (
         <ArticleCard
+          key={article.article_id}
           author={article.author}
           title={article.title}
           body={article.body}
           topic={article.topic}
           votes={article.votes}
-          key={article.article_id}
           article_img={article.article_img_url}
           comment_count={article.comment_count}
           created_at={article.created_at}
