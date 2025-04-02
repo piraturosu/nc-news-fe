@@ -8,11 +8,14 @@ function ArticlesList() {
 
   useEffect(() => {
     getArticles().then((data) => {
-      const articlesFromApi = data.articles;
-      console.log(articlesFromApi);
       setArticles(articlesFromApi);
+      setIsLoading(false);
     });
   }, []);
+
+  if (isLoading) {
+    return <div>"Loading content..."</div>;
+  }
 
   return (
     <div className="w-4xl">
@@ -27,6 +30,7 @@ function ArticlesList() {
           article_img={article.article_img_url}
           comment_count={article.comment_count}
           created_at={article.created_at}
+          article_id={article.article_id}
         />
       ))}
     </div>

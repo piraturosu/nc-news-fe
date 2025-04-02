@@ -4,12 +4,15 @@ import {
   ArrowDownIcon,
   ChatBubbleOvalLeftIcon,
 } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
-function ArticleCard({ title, body, topic, comment_count, votes }) {
+function ArticleCard({ title, body, topic, comment_count, votes, article_id }) {
   return (
     <div className="h-50 mt-4 mb-4 hover:bg-slate-100 hover:shadow-md flex flex-col justify-evenly">
-      <div className=" flex">
-        <h3 className="text-2xl">{title}</h3>
+      <div className="flex">
+        <Link to={`/articles/${article_id}`}>
+          <h3 className="text-2xl">{title}</h3>
+        </Link>
         <p className="text-xs pl-4">{topic}</p>
       </div>
       <p>
