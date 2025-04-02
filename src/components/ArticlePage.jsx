@@ -1,26 +1,39 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getArticleById } from "../Api";
+import { getArticleById, getCommentsByArticleId } from "../Api";
 import {
   ArrowUpIcon,
   ArrowDownIcon,
   ChatBubbleOvalLeftIcon,
 } from "@heroicons/react/24/outline";
+import CommentCard from "./CommentCard";
 
 function ArticlePage() {
   const { article_id } = useParams();
   const [article, setArticle] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isArticleLoading, setIsArticleLoading] = useState(true);
+  const [isCommentLoading, setIsCommentLoading] = useState(true);
+
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     getArticleById(article_id).then(({ article: articleFromApi }) => {
       const article = articleFromApi;
+      console.log(articleFromApi);
       setArticle(article);
-      setIsLoading(false);
+      setIsArticleLoading(false);
     });
   }, [article_id]);
 
-  if (isLoading) {
+  useEffect(() => {
+    getCommentsByArticleId(article_id).then(({ comments: commentsFromApi }) => {
+      console.log(commentsFromApi);
+      setComments(commentsFromApi);
+      setIsCommentLoading(false);
+    });
+  }, [article_id]);
+
+  if (isArticleLoading) {
     return <p>Loading article...</p>;
   }
 
@@ -33,24 +46,42 @@ function ArticlePage() {
   const articleDate = formatter.format(date);
 
   return (
-    <div className="h-fit max-w-250 max-h-fit">
-      <div className="flex">
+    <div className="h-fit max-w-250 max-h-fit flex flex-col items-center">
+      <div className="flex ">
         <h2 className="text-2xl">{article.author}</h2>
         <p className="text-xs pl-4">{articleDate}</p>
       </div>
       <div>
         <p>{article.body}</p>
+        <div className="flex mt-2">
+          <div className="bg-slate-200 rounded-full w-15 h-8 flex items-center justify-around ml-4">
+            <ArrowUpIcon className="size-4" />
+            <p>{article.votes}</p>
+            <ArrowDownIcon className="size-4" />
+          </div>
+          <div className="bg-slate-200 rounded-full w-15 h-8 flex items-center justify-around ml-4">
+            <ChatBubbleOvalLeftIcon className="size-4" />
+            <p>{article.comment_count}</p>
+          </div>
+        </div>
       </div>
-      <div className="flex mt-2">
-        <div className="bg-slate-200 rounded-full w-15 h-8 flex items-center justify-around ml-4">
-          <ArrowUpIcon className="size-4" />
-          <p>{article.votes}</p>
-          <ArrowDownIcon className="size-4" />
-        </div>
-        <div className="bg-slate-200 rounded-full w-15 h-8 flex items-center justify-around ml-4">
-          <ChatBubbleOvalLeftIcon className="size-4" />
-          <p>{article.comment_count}</p>
-        </div>
+      <img src={article.article_img_url} alt={article.title} className="m-4" />
+      <div>
+        {isCommentLoading ? (
+          <p>Loading comments...</p>
+        ) : (
+          comments.map((comment) => {
+            return (
+              <CommentCard
+                key={comment.id}
+                id={comment.id}
+                body={comment.body}
+                votes={comment.votes}
+                author={comment.author}
+              />
+            );
+          })
+        )}
       </div>
     </div>
   );
