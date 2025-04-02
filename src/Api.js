@@ -1,9 +1,17 @@
 import axios from "axios";
 
+const baseApi = axios.create({
+  baseURL: "https://nc-news-w6mu.onrender.com/api",
+});
+
 export function getArticles() {
-  return axios
-    .get("https://nc-news-w6mu.onrender.com/api/articles")
-    .then(({ data }) => {
-      return data;
-    });
+  return baseApi.get("/articles").then(({ data }) => {
+    return data;
+  });
+}
+
+export function getArticleById(id) {
+  return baseApi.get(`/articles/${id}`).then(({ data }) => {
+    return data;
+  });
 }
