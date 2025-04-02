@@ -7,15 +7,17 @@ import {
   ChatBubbleOvalLeftIcon,
 } from "@heroicons/react/24/outline";
 import CommentCard from "./CommentCard";
-import { patchArticleVote } from "../api";
+import { patchArticleVote, postComment } from "../api";
 
 function ArticlePage() {
   const { article_id } = useParams();
   const [article, setArticle] = useState(null);
   const [localVotes, setLocalVotes] = useState(null);
+  const [error, setError] = useState(null);
   const [isArticleLoading, setIsArticleLoading] = useState(true);
   const [isCommentLoading, setIsCommentLoading] = useState(true);
   const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
 
   function handleIncrementVote() {
     setLocalVotes((prevVotes) => prevVotes + 1);
@@ -29,6 +31,48 @@ function ArticlePage() {
     patchArticleVote(article_id, { inc_votes: -1 }).catch(() => {
       setLocalVotes((prevVotes) => prevVotes + 1);
     });
+  }
+
+  function handleInputChange(event) {
+    event.preventDefault();
+    setNewComment(event.target.value);
+  }
+
+  function handleFormSubmit(event) {
+    event.preventDefault();
+
+    if (!newComment.trim()) {
+      setError("Comment cannot be empty.");
+      return;
+    }
+    const newCommentObj = {
+      comment_id: Date.now,
+      author: "happyamy2016",
+      body: newComment,
+      votes: 0,
+    };
+    //optimistic UI rendering
+    setComments((prevComments) => [newCommentObj, ...prevComments]);
+
+    postComment(article_id, {
+      username: "happyamy2016",
+      body: newComment,
+    })
+      .then((apiComment) => {
+        setComments((prevComments) =>
+          prevComments.map((comment) =>
+            comment.comment_id === newCommentObj.comment_id
+              ? apiComment
+              : comment,
+          ),
+        );
+        event.target.reset();
+        setNewComment("");
+        setError(null);
+      })
+      .catch(() => {
+        setError("Failed to post comment. Plese try again later");
+      });
   }
 
   useEffect(() => {
@@ -58,6 +102,7 @@ function ArticlePage() {
     year: "numeric",
   });
   const articleDate = formatter.format(date);
+
   return (
     <div className="h-fit max-w-250 max-h-fit flex flex-col items-center">
       <div className="flex ">
@@ -84,7 +129,28 @@ function ArticlePage() {
           </div>
         </div>
       </div>
-      <img src={article.article_img_url} alt={article.title} className="m-4" />
+      <img
+        src={article.article_img_url}
+        alt={article.title}
+        className="m-4 border border-gray-300 rounded-lg shadow-md"
+      />
+      <form
+        className="max-w-lg w-full mt-4 p-4 border border-gray-300 rounded-lg shadow-md"
+        onSubmit={handleFormSubmit}
+      >
+        <label htmlFor="new-comment">Add a comment</label>
+        <textarea
+          type="textarea"
+          name="new-comment"
+          className="w-full p-3 border border-gray-300 rounded-md"
+          rows="3"
+          onChange={handleInputChange}
+        ></textarea>
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+        <button type="submit">
+          <p>Submit</p>
+        </button>
+      </form>
       <div>
         {isCommentLoading ? (
           <p>Loading comments...</p>
