@@ -8,6 +8,7 @@ function ArticlesList() {
 
   useEffect(() => {
     getArticles().then((data) => {
+      const articlesFromApi = data.articles;
       setArticles(articlesFromApi);
       setIsLoading(false);
     });
