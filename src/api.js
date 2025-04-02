@@ -23,13 +23,23 @@ export function getCommentsByArticleId(id) {
 }
 
 export function getUsers() {
-  return baseApi.get(`/users`).then(({data: {users}}) => {
+  return baseApi.get(`/users`).then(({ data: { users } }) => {
     return users;
-  })
+  });
 }
 
-export function patchArticleVote(id, body) {
-  return baseApi.patch(`/articles/${id}`, body).then(({data: {article}}) =>{
-    return article
-  })
+export function patchArticleVote(article_id, body) {
+  return baseApi
+    .patch(`/articles/${article_id}`, body)
+    .then(({ data: { article } }) => {
+      return article;
+    });
+}
+
+export function postComment(article_id, { username, body }) {
+  return baseApi
+    .post(`/articles/${article_id}/comments`, { username, body })
+    .then(({ data: { comment } }) => {
+      return comment;
+    });
 }
