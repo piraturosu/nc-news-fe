@@ -8,6 +8,8 @@ import {
 } from "@heroicons/react/24/outline";
 import CommentCard from "./CommentCard";
 import { patchArticleVote, postComment } from "../api";
+import { useContext } from "react";
+import { LoggedInUserContext } from "../contexts/LoggedInUser";
 
 function ArticlePage() {
   const { article_id } = useParams();
@@ -18,6 +20,7 @@ function ArticlePage() {
   const [isCommentLoading, setIsCommentLoading] = useState(true);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const { user, setUser } = useContext(LoggedInUserContext);
 
   function handleIncrementVote() {
     setLocalVotes((prevVotes) => prevVotes + 1);
@@ -47,7 +50,7 @@ function ArticlePage() {
     }
     const newCommentObj = {
       comment_id: Date.now,
-      author: "happyamy2016",
+      author: user.username,
       body: newComment,
       votes: 0,
     };
@@ -55,7 +58,7 @@ function ArticlePage() {
     setComments((prevComments) => [newCommentObj, ...prevComments]);
 
     postComment(article_id, {
-      username: "happyamy2016",
+      username: user.username,
       body: newComment,
     })
       .then((apiComment) => {
@@ -163,6 +166,7 @@ function ArticlePage() {
                 body={comment.body}
                 votes={comment.votes}
                 author={comment.author}
+                setComments={setComments}
               />
             );
           })
