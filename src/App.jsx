@@ -1,8 +1,9 @@
 import "./App.css";
 import ArticlePage from "./components/ArticlePage";
-import ArticlesList from "./components/ArticlesList";
 import Header from "./components/Header";
-import TopicsList from "./components/TopicsList";
+import Home from "./components/Home";
+import UserPage from "./components/UserPage";
+import LoginPage from "./components/LoginPage";
 import { Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -10,16 +11,10 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <section className="flex justify-around">
-              <TopicsList />
-              <ArticlesList />
-            </section>
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route path="/articles/:article_id" element={<ArticlePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/users/:user_id" element={<UserPage />} />
       </Routes>
     </>
   );

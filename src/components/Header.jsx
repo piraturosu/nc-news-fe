@@ -1,8 +1,11 @@
-import React from "react";
+import { useContext } from "react";
 import { PlusIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { LoggedInUserContext } from "../contexts/LoggedInUser";
+import UserCard from "./UserCard";
 
 function Header() {
+  const { user, setUser } = useContext(LoggedInUserContext);
   return (
     <header className="flex justify-between w-full items-center">
       <Link to="/">
@@ -18,7 +21,16 @@ function Header() {
           <PlusIcon className="size-7" />
           <p>Add article</p>
         </div>
-        <UserCircleIcon className="size-12" />
+        <Link to={user ? `/users/${user.user_id}` : "/login"}>
+          {user ? (
+            <UserCard user={user} />
+          ) : (
+            <div className="ml-5">
+              <UserCircleIcon className="size-12" />
+              <p>Log in</p>
+            </div>
+          )}
+        </Link>
       </div>
     </header>
   );

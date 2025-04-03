@@ -43,3 +43,7 @@ export function postComment(article_id, { username, body }) {
       return comment;
     });
 }
+
+export function deleteComment(comment_id) {
+  return baseApi.delete(`/comments/${comment_id}`)
+}
