@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import UserPage from "./components/UserPage";
 import LoginPage from "./components/LoginPage";
-import { Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/:topic" element={<Home />} />
         <Route path="/articles/:article_id" element={<ArticlePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/users/:user_id" element={<UserPage />} />
