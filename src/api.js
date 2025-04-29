@@ -5,7 +5,6 @@ const baseApi = axios.create({
 });
 
 export function getArticles(topic, sort_by, order) {
-  console.log(sort_by, order);
   let query = "/articles";
 
   const queryParts = [];

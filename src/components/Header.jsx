@@ -7,15 +7,17 @@ import UserCard from "./UserCard";
 function Header() {
   const { user, setUser } = useContext(LoggedInUserContext);
   return (
-    <header className="flex justify-between w-full items-center">
+    <header className="w-full flex flex-row justify-between p-4 sm:justify-between bg-white shadow-md items-center">
       <Link to="/">
         <img
           src="https://logoeps.com/wp-content/uploads/2014/05/21601-news-logo-icon-vector-icon-vector-eps.png"
           alt="news-logo"
-          className="size-30"
+          className="w-20 h-auto sm:w-28"
         />
       </Link>
-      <h1>Best news in town</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl">
+        Best news in town
+      </h1>
       <div className="flex flex-row items-center">
         <div className="flex flex-column items-center">
           <PlusIcon className="size-7" />

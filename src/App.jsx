@@ -8,16 +8,18 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <>
+    <div className="min-h-screen min-w-screen flex flex-col bg-white">
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/:topic" element={<Home />} />
-        <Route path="/articles/:article_id" element={<ArticlePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/users/:user_id" element={<UserPage />} />
-      </Routes>
-    </>
+      <main className="p-4 sm:p-6 md:p-6 max-w-5xl w-full mx-auto">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/:topic" element={<Home />} />
+          <Route path="/articles/:article_id" element={<ArticlePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/users/:user_id" element={<UserPage />} />
+        </Routes>
+      </main>
+    </div>
   );
 }
 
