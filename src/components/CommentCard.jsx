@@ -4,7 +4,7 @@ import { LoggedInUserContext } from "../contexts/LoggedInUser";
 import { deleteComment } from "../api";
 
 function CommentCard({ body, votes, author, setComments, id }) {
-  const { user, setUser } = useContext(LoggedInUserContext);
+  const { user } = useContext(LoggedInUserContext);
 
   function handleDeleteComment() {
     if (!window.confirm("Are you sure you want to delete this comment?"))
@@ -27,7 +27,7 @@ function CommentCard({ body, votes, author, setComments, id }) {
         <h3>{author}</h3>
         {user.username === author ? (
           <button className="text-red-500" onClick={handleDeleteComment}>
-            delete
+            delete comment
           </button>
         ) : (
           ""

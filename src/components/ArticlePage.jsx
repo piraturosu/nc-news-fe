@@ -49,10 +49,8 @@ function ArticlePage() {
       return;
     }
     const newCommentObj = {
-      comment_id: Date.now,
       author: user.username,
       body: newComment,
-      votes: 0,
     };
     //optimistic UI rendering
     setComments((prevComments) => [newCommentObj, ...prevComments]);
@@ -157,19 +155,19 @@ function ArticlePage() {
       <div>
         {isCommentLoading ? (
           <p>Loading comments...</p>
+        ) : comments.length === 0 ? (
+          <p>No comments yet. Be the first to comment!</p>
         ) : (
-          comments.map((comment) => {
-            return (
-              <CommentCard
-                key={comment.comment_id}
-                id={comment.comment_id}
-                body={comment.body}
-                votes={comment.votes}
-                author={comment.author}
-                setComments={setComments}
-              />
-            );
-          })
+          comments.map((comment) => (
+            <CommentCard
+              key={comment.comment_id}
+              id={comment.comment_id}
+              body={comment.body}
+              votes={comment.votes}
+              author={comment.author}
+              setComments={setComments}
+            />
+          ))
         )}
       </div>
     </div>
