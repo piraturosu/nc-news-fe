@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import UserPage from "./components/UserPage";
 import LoginPage from "./components/LoginPage";
+import CreateArticle from "./components/CreateArticle";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/articles/:article_id" element={<ArticlePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/users/:user_id" element={<UserPage />} />
+          <Route path="/create-article" element={<CreateArticle />} />
         </Routes>
       </main>
     </div>

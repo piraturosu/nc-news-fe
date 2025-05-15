@@ -5,7 +5,7 @@ import { LoggedInUserContext } from "../contexts/LoggedInUser";
 import UserCard from "./UserCard";
 
 function Header() {
-  const { user, setUser } = useContext(LoggedInUserContext);
+  const { user } = useContext(LoggedInUserContext);
   return (
     <header className="w-full flex flex-row justify-between p-4 sm:justify-between bg-white shadow-md items-center">
       <Link to="/">
@@ -15,13 +15,15 @@ function Header() {
           className="w-20 h-auto sm:w-28"
         />
       </Link>
-      <h1 className="text-xl sm:text-2xl md:text-3xl">
-        Best news in town
-      </h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl">Best news in town</h1>
       <div className="flex flex-row items-center">
         <div className="flex flex-column items-center">
-          <PlusIcon className="size-7" />
-          <p>Add article</p>
+          {user && (
+            <Link to="/create-article">
+              <PlusIcon className="size-7" />
+              <p>Add article</p>
+            </Link>
+          )}
         </div>
         <Link to={user ? `/users/${user.user_id}` : "/login"}>
           {user ? (
