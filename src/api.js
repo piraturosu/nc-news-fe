@@ -64,3 +64,11 @@ export function getTopics() {
     return topics;
   });
 }
+
+export function postArticle(article) {
+  return baseApi
+    .post("/articles", article)
+    .then(({ data: { article } }) => {
+      return article;
+    });
+}

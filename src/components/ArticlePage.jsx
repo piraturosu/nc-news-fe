@@ -20,7 +20,7 @@ function ArticlePage() {
   const [isCommentLoading, setIsCommentLoading] = useState(true);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const { user, setUser } = useContext(LoggedInUserContext);
+  const { user } = useContext(LoggedInUserContext);
 
   function handleIncrementVote() {
     setLocalVotes((prevVotes) => prevVotes + 1);
