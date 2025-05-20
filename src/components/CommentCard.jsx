@@ -22,18 +22,21 @@ function CommentCard({ body, votes, author, setComments, id }) {
   }
 
   return (
-    <div className="mt-4">
-      <div className="flex items-center justify-between">
-        <h3>{author}</h3>
+    <div className="mt-6 p-4 bg-white rounded-lg shadow-md border border-gray-200 dark:border-gray-700 w-full max-w-3xl mx-auto">
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-lg font-semibold text-gray-900">{author}</h3>
         {user.username === author ? (
-          <button className="text-red-500" onClick={handleDeleteComment}>
+          <button
+            className="text-red-500 hover:text-red-700 text-sm font-medium transition-colors duration-200"
+            onClick={handleDeleteComment}
+          >
             delete comment
           </button>
         ) : (
           ""
         )}
       </div>
-      <p>{body}</p>
+      <p className="mb-4">{body}</p>
       <div className="flex mt-2">
         <div className="bg-slate-200 rounded-full w-12 h-6 flex items-center justify-around ml-4">
           <ArrowUpIcon className="size-3" />

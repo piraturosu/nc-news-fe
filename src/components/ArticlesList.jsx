@@ -35,26 +35,26 @@ function ArticlesList() {
   }
 
   return (
-    <div className="w-4xl flex flex-col items-center">
-      <div className="flex flex-row space-y-2">
-        <div className="">
+    <div className="flex flex-col items-center w-full max-w-6xl mx-auto p-4">
+      <div className="flex flex-row sm:flex-row space-y-2 space-x-4 sm:space-y-0 sm:space-x-4 mb-4 w-full">
+        <div className="w-full flex flex-col items-center sm:w-auto sm:items-center sm:justify-center">
           <label className="text-sm">Sort articles</label>
           <select
             value={sortBy}
             onChange={handleSortChange}
-            className="w-48 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-700"
+            className="w-full sm:w-48 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-700"
           >
             <option value="created_at">Date</option>
             <option value="comment_count">Comment count</option>
             <option value="votes">Votes</option>
           </select>
         </div>
-        <div>
+        <div className="w-full flex flex-col items-center sm:w-auto sm:items-center sm:justify-center">
           <label className="text-sm">Order By</label>
           <select
             value={order}
             onChange={handleOrderChange}
-            className="w-48 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-700"
+            className="w-full sm:w-48 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-700"
           >
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>

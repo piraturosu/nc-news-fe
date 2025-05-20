@@ -14,10 +14,8 @@ function Home() {
   }, []);
 
   return (
-    <div className="flex justify-around w-full">
-      <TopicsList
-        topics={topics}
-      />
+    <div className="flex flex-col justify-center w-auto sm:flex-row sm:w-full min-h-screen">
+      <TopicsList topics={topics} />
       <ArticlesList />
     </div>
   );

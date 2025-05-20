@@ -35,31 +35,38 @@ function LoginPage() {
   }
 
   return (
-    <div className="flex items-center justify-center">
-      <form
-        onSubmit={handleLogin}
-        onChange={handleChange}
-        className="text-center"
-      >
-        <label htmlFor="username">
-          <h2>Select your username:</h2>
-        </label>
-        <select
-          name="username"
-          id="username"
-          className="w-full p-2 border border-black rounded-md"
-        >
-          <option value="blank"></option>
-          {users.map((user) => {
-            return (
-              <option key={user.username} value={user.user_id}>
-                {user.username}
+    <div className="flex justify-center p-4">
+      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md border border-gray-200">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
+          Select Your Username
+        </h2>
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <select
+              name="username"
+              id="username"
+              value={currentUserName}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+            >
+              <option value="" disabled>
+                Choose a username
               </option>
-            );
-          })}
-        </select>
-        <button type="submit">Log in</button>
-      </form>
+              {users.map((user) => (
+                <option key={user.username} value={user.username}>
+                  {user.username}
+                </option>
+              ))}
+            </select>
+          </div>
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+          >
+            Log In
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

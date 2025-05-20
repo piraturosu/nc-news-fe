@@ -48,11 +48,11 @@ function CreateArticle() {
         navigate("/");
       })
       .catch((error) => {
+        console.log(error);
         setError("Failed to create article. Please try again.");
       });
   }
 
-  console.log(articleData);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h1 className="text-2xl font-bold mb-4">Create a New Article</h1>

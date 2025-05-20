@@ -4,9 +4,8 @@ function UserCard({ user }) {
       <img
         src={user.avatar_url}
         alt={user.username}
-        className="border rounded-md size-12"
+        className="rounded-full size-12"
       />
-      <div>{user.username}</div>
     </div>
   );
 }
