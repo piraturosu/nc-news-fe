@@ -7,7 +7,7 @@ import UserCard from "./UserCard";
 function Header() {
   const { user } = useContext(LoggedInUserContext);
   return (
-    <header className="w-full flex flex-row justify-between p-4 sm:justify-between bg-white shadow-md items-center">
+    <header className="w-auto flex justify-between p-4 bg-white shadow-md items-center">
       <Link to="/">
         <img
           src="https://logoeps.com/wp-content/uploads/2014/05/21601-news-logo-icon-vector-icon-vector-eps.png"
@@ -15,13 +15,15 @@ function Header() {
           className="w-20 h-auto sm:w-28"
         />
       </Link>
-      <h1 className="text-xl sm:text-2xl md:text-3xl">Best news in town</h1>
+      <h1 className="text-lg sm:text-2xl md:text-3xl">Best news in town</h1>
       <div className="flex flex-row items-center">
         <div className="flex flex-column items-center">
           {user && (
             <Link to="/create-article">
-              <PlusIcon className="size-7" />
-              <p>Add article</p>
+              <div className="flex items-center bg-gray-200 hover:bg-gray-300 rounded-3xl p-2 mr-4">
+                <PlusIcon className="size-7" />
+                <p>Add article</p>
+              </div>
             </Link>
           )}
         </div>
