@@ -4,7 +4,7 @@ function UserCard({ user }) {
       <img
         src={user.avatar_url}
         alt={user.username}
-        className="rounded-full size-12"
+        className="size-10 rounded-full sm:size-12"
       />
     </div>
   );

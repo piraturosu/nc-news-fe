@@ -15,14 +15,16 @@ function Header() {
           className="w-20 h-auto sm:w-28"
         />
       </Link>
-      <h1 className="text-lg sm:text-2xl md:text-3xl">Best news in town</h1>
+      <h1 className="hidden sm:text-2xl sm:block md:text-3xl md:block">
+        Best news in town
+      </h1>
       <div className="flex flex-row items-center">
         <div className="flex flex-column items-center">
           {user && (
             <Link to="/create-article">
-              <div className="flex items-center bg-gray-200 hover:bg-gray-300 rounded-3xl p-2 mr-4">
-                <PlusIcon className="size-7" />
-                <p>Add article</p>
+              <div className="flex flex-col items-center justify-center bg-gray-200 hover:bg-gray-300 rounded-full p-2 mr-4 sm:flex-row">
+                <PlusIcon className="size-5 sm:size-7" />
+                <p className="text-xs sm:text-sm sm:block">Create</p>
               </div>
             </Link>
           )}
