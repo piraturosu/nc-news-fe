@@ -9,7 +9,7 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="min-h-screen min-w-screen flex flex-col bg-white">
+    <div className="flex flex-col bg-white">
       <Header />
       <main className="p-4 sm:p-6 md:p-6 max-w-5xl w-full mx-auto">
         <Routes>
