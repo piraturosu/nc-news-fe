@@ -54,10 +54,10 @@ function CreateArticle() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center min-h-screen w-full">
       <h1 className="text-2xl font-bold mb-4">Create a New Article</h1>
       <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-lg"
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-250 min-w-fit"
         onSubmit={handleSubmit}
       >
         <div className="mb-4">

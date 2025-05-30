@@ -21,7 +21,6 @@ function ArticlePage() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const { user } = useContext(LoggedInUserContext);
-
   function handleIncrementVote() {
     setLocalVotes((prevVotes) => prevVotes + 1);
     patchArticleVote(article_id, { inc_votes: 1 }).catch(() => {
@@ -105,28 +104,31 @@ function ArticlePage() {
   const articleDate = formatter.format(date);
 
   return (
-    <div className="h-fit max-w-250 max-h-fit flex flex-col items-center">
-      <div className="flex ">
-        <h2 className="text-2xl">{article.author}</h2>
-        <p className="text-xs pl-4">{articleDate}</p>
-      </div>
-      <div>
-        <p>{article.body}</p>
-        <div className="flex mt-2">
-          <div className="bg-slate-200 rounded-full w-15 h-8 flex items-center justify-around ml-4">
-            <ArrowUpIcon
-              className="size-4 cursor-pointer hover:text-blue-500"
-              onClick={handleIncrementVote}
-            />
-            <p>{localVotes}</p>
-            <ArrowDownIcon
-              className="size-4 cursor-pointer hover:text-blue-500"
-              onClick={handleDecrementVote}
-            />
-          </div>
-          <div className="bg-slate-200 rounded-full w-15 h-8 flex items-center justify-around ml-4">
-            <ChatBubbleOvalLeftIcon className="size-4" />
-            <p>{article.comment_count}</p>
+    <div className="h-fit min-w-fit max-h-fit flex flex-col items-center">
+      <div className="max-w-250 w-full min-w-fit p-4 border border-gray-300 rounded-lg shadow-md">
+        <div className="flex flex-row self-start">
+          <h2 className="text-l">{article.author}</h2>
+          <p className="text-xs pl-2">{articleDate}</p>
+        </div>
+        <h1 className="text-3xl self-start font-bold p-2">{article.title}</h1>
+        <div>
+          <p>{article.body}</p>
+          <div className="flex mt-2">
+            <div className="bg-slate-200 rounded-full w-15 h-8 flex items-center justify-around ml-4">
+              <ArrowUpIcon
+                className="size-4 cursor-pointer hover:text-blue-500"
+                onClick={handleIncrementVote}
+              />
+              <p>{localVotes}</p>
+              <ArrowDownIcon
+                className="size-4 cursor-pointer hover:text-blue-500"
+                onClick={handleDecrementVote}
+              />
+            </div>
+            <div className="bg-slate-200 rounded-full w-15 h-8 flex items-center justify-around ml-4">
+              <ChatBubbleOvalLeftIcon className="size-4" />
+              <p>{article.comment_count}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -136,7 +138,7 @@ function ArticlePage() {
         className="m-4 border border-gray-300 rounded-lg shadow-md"
       />
       <form
-        className="max-w-lg w-full mt-4 p-4 border border-gray-300 rounded-lg shadow-md"
+        className="max-w-250 min-w-fit w-full mt-4 p-4 border border-gray-300 rounded-lg shadow-md"
         onSubmit={handleFormSubmit}
       >
         <label htmlFor="new-comment">Add a comment</label>
@@ -148,11 +150,19 @@ function ArticlePage() {
           onChange={handleInputChange}
         ></textarea>
         {error && <p className="text-red-500 mt-2">{error}</p>}
-        <button type="submit">
+        <button
+          className={`w-fit py-2 px-4 font-medium rounded-md ${
+            user
+              ? "bg-blue-500 text-white  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          } `}
+          type="submit"
+          disabled={!user}
+        >
           <p>Submit</p>
         </button>
       </form>
-      <div>
+      <div className="mt-6 p-4 bg-white rounded-lg shadow-md border border-gray-200 dark:border-gray-700 max-w-250 w-full min-w-fit mx-auto">
         {isCommentLoading ? (
           <p>Loading comments...</p>
         ) : comments.length === 0 ? (

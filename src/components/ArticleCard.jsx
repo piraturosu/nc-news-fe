@@ -25,12 +25,14 @@ function ArticleCard({ title, body, topic, comment_count, votes, article_id }) {
   }
 
   return (
-    <div className="min-h-50 min-w-full m-4 p-4  border-gray-300 rounded-lg shadow-sm hover:bg-slate-100 hover:shadow-md flex flex-col justify-evenly">
+    <div className="relative min-h-50 h-fit min-w-full m-4 p-4  border-gray-300 rounded-lg shadow-sm hover:bg-slate-100 hover:shadow-md flex flex-col justify-evenly">
+      <div className="absolute top-0 right-0 ml-4 size-6 rounded w-fit h-fit bg-blue-500">
+        <div className=" text-xs text-white p-0.5 sm:p-1">{topic}</div>
+      </div>
       <div className="flex">
         <Link to={`/articles/${article_id}`}>
           <h3 className="text-2xl">{title}</h3>
         </Link>
-        <p className="text-xs pl-4">{topic}</p>
       </div>
       <p>
         {body.length > 300 ? body.slice(0, 300).trim().concat("...") : body}

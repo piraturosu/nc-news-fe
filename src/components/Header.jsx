@@ -15,9 +15,7 @@ function Header() {
           className="w-20 h-auto sm:w-28"
         />
       </Link>
-      <h1 className="hidden sm:text-2xl sm:block md:text-3xl md:block">
-        Best news in town
-      </h1>
+  
       <div className="flex flex-row items-center">
         <div className="flex flex-column items-center">
           {user && (
