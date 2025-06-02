@@ -162,7 +162,7 @@ function ArticlePage() {
           <p>Submit</p>
         </button>
       </form>
-      <div className="mt-6 p-4 bg-white rounded-lg shadow-md border border-gray-200 dark:border-gray-700 max-w-250 w-full min-w-fit mx-auto">
+      <div className="max-w-250 w-full min-w-fit mx-auto">
         {isCommentLoading ? (
           <p>Loading comments...</p>
         ) : comments.length === 0 ? (

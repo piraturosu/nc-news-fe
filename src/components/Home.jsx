@@ -1,7 +1,6 @@
-import React from "react";
 import TopicsList from "./TopicsList";
 import ArticlesList from "./ArticlesList";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { getTopics } from "../api";
 import { getArticles } from "../api";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -13,8 +12,8 @@ function Home() {
   const { topic } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const sortBy = searchParams.get("sort_by") || "";
-  const order = searchParams.get("order") || "";
+  const sortBy = searchParams.get("sort_by") || "created_at";
+  const order = searchParams.get("order") || "desc";
 
   useEffect(() => {
     setIsLoading(true);
@@ -51,6 +50,8 @@ function Home() {
         articles={articles}
         handleSortChange={handleSortChange}
         handleOrderChange={handleOrderChange}
+        sortBy={sortBy}
+        order={order}
       />
     </div>
   );

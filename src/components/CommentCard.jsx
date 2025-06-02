@@ -22,7 +22,7 @@ function CommentCard({ body, votes, author, setComments, id }) {
   }
 
   return (
-    <div>
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 mt-6 p-4">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-lg font-semibold text-gray-900">{author}</h3>
         {user.username === author ? (
