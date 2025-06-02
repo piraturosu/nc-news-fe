@@ -1,39 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ArticleCard from "./ArticleCard";
-import { getArticles } from "../api";
-import { useParams, useSearchParams } from "react-router-dom";
 
-function ArticlesList() {
-  const [articles, setArticles] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { topic } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
 
-  const sortBy = searchParams.get("sort_by") || "";
-  const order = searchParams.get("order") || "";
-
-  useEffect(() => {
-    getArticles(topic, sortBy, order).then((data) => {
-      const articlesFromApi = data.articles;
-      setArticles(articlesFromApi);
-      setIsLoading(false);
-    });
-  }, [topic, sortBy, order]);
-
-  function handleSortChange(e) {
-    searchParams.set("sort_by", e.target.value);
-    setSearchParams(searchParams);
-  }
-
-  function handleOrderChange(e) {
-    searchParams.set("order", e.target.value);
-    setSearchParams(searchParams);
-  }
-
-  if (isLoading) {
-    return <div>"Loading content..."</div>;
-  }
-
+function ArticlesList({ articles, handleSortChange, handleOrderChange }) {
   return (
     <div className="flex flex-col items-center w-full max-w-6xl mx-auto p-4">
       <div className="flex flex-row sm:flex-row space-y-2 space-x-4 sm:space-y-0 sm:space-x-4 mb-4 w-full">
