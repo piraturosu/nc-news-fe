@@ -11,6 +11,7 @@ import { patchArticleVote, postComment } from "../api";
 import { useContext } from "react";
 import { LoggedInUserContext } from "../contexts/LoggedInUser";
 import RouteNotFound from "./RouteNotFound";
+import { Link } from "react-router-dom";
 
 function ArticlePage() {
   const { article_id } = useParams();
@@ -99,7 +100,11 @@ function ArticlePage() {
   }, [article_id]);
 
   if (isArticleLoading) {
-    return <p>Loading article...</p>;
+    return (
+      <p className="flex justify-center min-h-screen w-full">
+        Loading article...
+      </p>
+    );
   }
   console.log(error);
   if (error && error.response && error.response.status === 404) {
@@ -148,31 +153,42 @@ function ArticlePage() {
         alt={article.title}
         className="m-4 border border-gray-300 rounded-lg shadow-md"
       />
-      <form
-        className="max-w-250 min-w-fit w-full mb-4 p-4 border border-gray-300 rounded-lg shadow-md"
-        onSubmit={handleFormSubmit}
-      >
-        <label htmlFor="new-comment">Add a comment</label>
-        <textarea
-          type="textarea"
-          name="new-comment"
-          className="w-full p-3 border border-gray-300 rounded-md"
-          rows="3"
-          onChange={handleInputChange}
-        ></textarea>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
-        <button
-          className={`w-fit py-2 px-4 font-medium rounded-md ${
-            user
-              ? "bg-blue-500 text-white  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
-          } `}
-          type="submit"
-          disabled={!user}
+      {user && (
+        <form
+          className="max-w-250 min-w-fit w-full mb-4 p-4 border border-gray-300 rounded-lg shadow-md"
+          onSubmit={handleFormSubmit}
         >
-          <p>Submit</p>
-        </button>
-      </form>
+          <label htmlFor="new-comment">Add a comment</label>
+          <textarea
+            type="textarea"
+            name="new-comment"
+            className="w-full p-3 border border-gray-300 rounded-md"
+            rows="3"
+            onChange={handleInputChange}
+          ></textarea>
+          {error && <p className="text-red-500 mt-2">{error}</p>}
+          <button
+            className={`w-fit py-2 px-4 font-medium rounded-md ${
+              user
+                ? "bg-blue-500 text-white  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            } `}
+            type="submit"
+          >
+            <p>Submit</p>
+          </button>
+        </form>
+      )}
+      {!user && (
+        <p className="text-center">
+          Please{" "}
+          <Link className="text-blue-500" to="/login">
+            log in
+          </Link>{" "}
+          to add a comment.
+        </p>
+      )}
+
       <div className="max-w-250 w-full min-w-fit mx-auto">
         {isCommentLoading ? (
           <p className="text-center">Loading comments...</p>
