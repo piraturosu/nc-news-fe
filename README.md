@@ -1,12 +1,54 @@
-# React + Vite
+# NC-News Front End Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to **NC News**, a Reddit-inspired news application that allows users to read, create, and interact with articles. This front-end project connects to a custom-built API and offers a responsive user experience.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Logging In
+- Authentication is not implemented yet.
+- Navigate to the login page and select a username from the list to simulate login.
 
-## Expanding the ESLint configuration
+### As a logged-in user, you can:
+- Create new articles (via the **"Create"** button next to the login button)
+- Comment on articles
+- Delete **your own** comments
+- Upvote or downvote articles
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Explore Articles
+- Filter articles by topic (use the sidebar)
+- Sort and order articles using the dropdowns on the home page
+
+Future features I want to build:
+
+1. **Pagination** – Display 10 articles per page with dynamic pagination.
+2. **Loading Skeletons** – Use suspense-style loading indicators for a smoother UX.
+3. **Authentication** – Integrate with Auth0 for secure user login.
+4. **Tooltips** – Add helpful hover explanations for icons and input fields.
+5. **Topic Creation** – Allow users to create new topics.
+
+**Front End:**
+
+- [Live site](https://ncnews-gc.netlify.app/)
+- [GitHub repo](https://github.com/piraturosu/nc-news)
+
+**Back End (API):**
+
+- [API live link](https://nc-news-w6mu.onrender.com/api)
+- [API GitHub repo](https://github.com/piraturosu/nc-news)
+
+**Minimum Requirements:**
+
+- Node.js version 23+
+
+**Steps:**
+
+1. Clone this repo:
+   `git clone https://github.com/piraturosu/nc-news`
+2. Navigate into the directory:
+   `cd nc-news`
+3. Install dependencies:
+   `npm install`
+4. Start the development server:
+   `npm run dev`
+
+This portfolio project was created as part of a **Digital Skills Bootcamp in Software Engineering** provided by **Northcoders**
