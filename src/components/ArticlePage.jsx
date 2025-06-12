@@ -10,6 +10,7 @@ import CommentCard from "./CommentCard";
 import { patchArticleVote, postComment } from "../api";
 import { useContext } from "react";
 import { LoggedInUserContext } from "../contexts/LoggedInUser";
+import RouteNotFound from "./RouteNotFound";
 
 function ArticlePage() {
   const { article_id } = useParams();
@@ -21,6 +22,7 @@ function ArticlePage() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const { user } = useContext(LoggedInUserContext);
+
   function handleIncrementVote() {
     setLocalVotes((prevVotes) => prevVotes + 1);
     patchArticleVote(article_id, { inc_votes: 1 }).catch(() => {
@@ -76,12 +78,17 @@ function ArticlePage() {
   }
 
   useEffect(() => {
-    getArticleById(article_id).then(({ article: articleFromApi }) => {
-      const article = articleFromApi;
-      setArticle(article);
-      setLocalVotes(article.votes);
-      setIsArticleLoading(false);
-    });
+    getArticleById(article_id)
+      .then(({ article: articleFromApi }) => {
+        const article = articleFromApi;
+        setArticle(article);
+        setLocalVotes(article.votes);
+        setIsArticleLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+        setIsArticleLoading(false);
+      });
   }, [article_id]);
 
   useEffect(() => {
@@ -93,6 +100,10 @@ function ArticlePage() {
 
   if (isArticleLoading) {
     return <p>Loading article...</p>;
+  }
+  console.log(error);
+  if (error && error.response && error.response.status === 404) {
+    return <RouteNotFound type="article" />;
   }
 
   const date = new Date(`${article.created_at}`);
@@ -138,7 +149,7 @@ function ArticlePage() {
         className="m-4 border border-gray-300 rounded-lg shadow-md"
       />
       <form
-        className="max-w-250 min-w-fit w-full mt-4 p-4 border border-gray-300 rounded-lg shadow-md"
+        className="max-w-250 min-w-fit w-full mb-4 p-4 border border-gray-300 rounded-lg shadow-md"
         onSubmit={handleFormSubmit}
       >
         <label htmlFor="new-comment">Add a comment</label>
@@ -164,9 +175,11 @@ function ArticlePage() {
       </form>
       <div className="max-w-250 w-full min-w-fit mx-auto">
         {isCommentLoading ? (
-          <p>Loading comments...</p>
+          <p className="text-center">Loading comments...</p>
         ) : comments.length === 0 ? (
-          <p>No comments yet. Be the first to comment!</p>
+          <p className="text-center">
+            No comments yet. Be the first to comment!
+          </p>
         ) : (
           comments.map((comment) => (
             <CommentCard

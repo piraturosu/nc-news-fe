@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { getTopics } from "../api";
 import { getArticles } from "../api";
 import { useParams, useSearchParams } from "react-router-dom";
+import RouteNotFound from "./RouteNotFound";
 
 function Home() {
   const [topics, setTopics] = useState([]);
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { topic } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -17,13 +19,17 @@ function Home() {
 
   useEffect(() => {
     setIsLoading(true);
-    Promise.all([getTopics(), getArticles(topic, sortBy, order)]).then(
-      ([topicsFromApi, articlesData]) => {
+    setError(null);
+    Promise.all([getTopics(), getArticles(topic, sortBy, order)])
+      .then(([topicsFromApi, articlesData]) => {
         setTopics(topicsFromApi);
         setArticles(articlesData.articles);
         setIsLoading(false);
-      },
-    );
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setError(err);
+      });
   }, [topic, sortBy, order]);
 
   function handleSortChange(e) {
@@ -43,6 +49,11 @@ function Home() {
       </div>
     );
   }
+
+  if (error && error.response.status === 404) {
+    return <RouteNotFound type="topic" />;
+  }
+
   return (
     <div className="flex flex-col justify-center w-auto sm:flex-row sm:w-full min-h-screen">
       <TopicsList topics={topics} />
