@@ -9,6 +9,7 @@ import RouteNotFound from "./RouteNotFound";
 function Home() {
   const [topics, setTopics] = useState([]);
   const [articles, setArticles] = useState([]);
+  const [totalArticles, setTotalArticles] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const { topic } = useParams();
@@ -16,29 +17,38 @@ function Home() {
 
   const sortBy = searchParams.get("sort_by") || "created_at";
   const order = searchParams.get("order") || "desc";
+  const page = searchParams.get("page") || 1;
 
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    Promise.all([getTopics(), getArticles(topic, sortBy, order)])
+    Promise.all([getTopics(), getArticles(topic, sortBy, order, page)])
       .then(([topicsFromApi, articlesData]) => {
         setTopics(topicsFromApi);
         setArticles(articlesData.articles);
+        setTotalArticles(articlesData.totalArticles || 0);
         setIsLoading(false);
       })
       .catch((err) => {
         setIsLoading(false);
         setError(err);
       });
-  }, [topic, sortBy, order]);
+  }, [topic, sortBy, order, page]);
 
   function handleSortChange(e) {
     searchParams.set("sort_by", e.target.value);
+    searchParams.set("page", "1");
     setSearchParams(searchParams);
   }
 
   function handleOrderChange(e) {
     searchParams.set("order", e.target.value);
+    searchParams.set("page", "1");
+    setSearchParams(searchParams);
+  }
+
+  function handlePageChange(newPage) {
+    searchParams.set("page", newPage);
     setSearchParams(searchParams);
   }
 
@@ -63,6 +73,9 @@ function Home() {
         handleOrderChange={handleOrderChange}
         sortBy={sortBy}
         order={order}
+        page={page}
+        totalArticles={totalArticles}
+        handlePageChange={handlePageChange}
       />
     </div>
   );

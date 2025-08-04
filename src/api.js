@@ -4,7 +4,7 @@ const baseApi = axios.create({
   baseURL: "https://nc-news-w6mu.onrender.com/api",
 });
 
-export function getArticles(topic, sort_by, order) {
+export function getArticles(topic, sort_by, order, page) {
   let query = "/articles";
 
   const queryParts = [];
@@ -12,6 +12,7 @@ export function getArticles(topic, sort_by, order) {
   if (topic) queryParts.push(`topic=${topic}`);
   if (sort_by) queryParts.push(`sort_by=${sort_by}`);
   if (order) queryParts.push(`order=${order}`);
+  if (page) queryParts.push(`page=${page}`)
 
   if (queryParts.length > 0) {
     query += "?" + queryParts.join("&");

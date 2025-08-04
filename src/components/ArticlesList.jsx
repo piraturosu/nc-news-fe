@@ -1,7 +1,23 @@
 import ArticleCard from "./ArticleCard";
 
+function ArticlesList({
+  articles,
+  handleSortChange,
+  handleOrderChange,
+  sortBy,
+  order,
+  page,
+  totalArticles,
+  handlePageChange,
+}) {
+  const articlePerPage = 10;
+  const totalPages = Math.ceil(totalArticles / articlePerPage);
 
-function ArticlesList({ articles, handleSortChange, handleOrderChange, sortBy, order }) {
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
   return (
     <div className="flex flex-col items-center w-full max-w-6xl mx-auto p-4">
       <div className="flex flex-row sm:flex-row space-y-2 space-x-4 sm:space-y-0 sm:space-x-4 mb-4 w-full">
@@ -43,6 +59,21 @@ function ArticlesList({ articles, handleSortChange, handleOrderChange, sortBy, o
           article_id={article.article_id}
         />
       ))}
+      <div className="flex flex-row items-center justify-center space-x-2 mt-4">
+        {pageNumbers.map((pageNum) => (
+          <button
+            key={pageNum}
+            onClick={() => handlePageChange(pageNum)}
+            className={`px-4 py-2 rounded-lg ${
+              pageNum === Number(page)
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+            }`}
+          >
+            {pageNum}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
